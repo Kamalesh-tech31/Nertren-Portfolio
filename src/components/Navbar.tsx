@@ -9,8 +9,13 @@ import {
   getActiveSectionId,
   mapActivePrimaryNavId,
 } from '../utils/navigation';
+import type { LegalTabId } from './LegalInformationDialog';
 
-export const Navbar: React.FC = () => {
+export interface NavbarProps {
+  onOpenLegalModal?: (tab: LegalTabId) => void;
+}
+
+export const Navbar: React.FC<NavbarProps> = ({ onOpenLegalModal }) => {
   const [visible, setVisible] = useState(true);
   const [hasScrolled, setHasScrolled] = useState(false);
   const [activeNavId, setActiveNavId] = useState('home');
@@ -145,6 +150,17 @@ export const Navbar: React.FC = () => {
     }
   };
 
+  const handleLegalLinkClick = (
+    event: React.MouseEvent<HTMLAnchorElement>,
+    tabId: string
+  ) => {
+    event.preventDefault();
+    setIsMenuOpen(false);
+    if (onOpenLegalModal) {
+      onOpenLegalModal(tabId as LegalTabId);
+    }
+  };
+
   return (
     <>
       <header
@@ -266,7 +282,7 @@ export const Navbar: React.FC = () => {
                   <li key={item.id}>
                     <a
                       href={`#${item.id}`}
-                      onClick={(e) => handleLinkClick(e, item.id)}
+                      onClick={(e) => handleLegalLinkClick(e, item.id)}
                       className="flex min-h-[44px] items-center py-2.5 text-sm text-muted-foreground hover:text-foreground focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary"
                     >
                       {item.label}

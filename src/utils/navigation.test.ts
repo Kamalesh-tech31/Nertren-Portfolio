@@ -20,7 +20,7 @@ import {
   DISCLAIMER_BLOCKS,
 } from '../data/firmData';
 
-test('navigation has exact 7 required primary items and 3 legal compliance items', () => {
+test('navigation has exact 7 required primary items and 4 legal compliance items', () => {
   assert.equal(PRIMARY_NAV_ITEMS.length, 7);
   assert.deepEqual(
     PRIMARY_NAV_ITEMS.map((item) => ({ id: item.id, label: item.label })),
@@ -34,7 +34,16 @@ test('navigation has exact 7 required primary items and 3 legal compliance items
       { id: 'contact', label: 'Contact' },
     ]
   );
-  assert.equal(LEGAL_NAV_ITEMS.length, 3);
+  assert.equal(LEGAL_NAV_ITEMS.length, 4);
+  assert.deepEqual(
+    LEGAL_NAV_ITEMS.map((item) => ({ id: item.id, label: item.label })),
+    [
+      { id: 'confidentiality', label: 'Confidentiality' },
+      { id: 'disclaimer', label: 'Website Disclaimer & BCI Compliance Notice' },
+      { id: 'privacy', label: 'Privacy Policy' },
+      { id: 'terms', label: 'Terms of Use' },
+    ]
+  );
 });
 
 test('navbar stays visible near top of page regardless of scroll direction', () => {

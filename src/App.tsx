@@ -1,16 +1,30 @@
+import { useState } from 'react';
 import { Navbar } from './components/Navbar';
 import { HomeSection } from './components/HomeSection';
 import { AboutSection } from './components/AboutSection';
 import { AdvocateProfiles } from './components/AdvocateProfiles';
 import { ClientEngagement } from './components/ClientEngagement';
 import { CourtsSection } from './components/CourtsSection';
-import { ConfidentialitySection } from './components/ConfidentialitySection';
-import { LegalDisclaimer } from './components/LegalDisclaimer';
-import { PrivacyPolicy } from './components/PrivacyPolicy';
 import { FaqSection } from './components/FaqSection';
 import { Footer } from './components/Footer';
+import {
+  LegalInformationDialog,
+  type LegalTabId,
+} from './components/LegalInformationDialog';
 
 export default function App() {
+  const [isLegalModalOpen, setIsLegalModalOpen] = useState(false);
+  const [activeLegalTab, setActiveLegalTab] = useState<LegalTabId>('confidentiality');
+
+  const handleOpenLegalModal = (tab: LegalTabId) => {
+    setActiveLegalTab(tab);
+    setIsLegalModalOpen(true);
+  };
+
+  const handleCloseLegalModal = () => {
+    setIsLegalModalOpen(false);
+  };
+
   return (
     <div className="min-h-screen bg-background text-foreground">
       <a
@@ -20,7 +34,7 @@ export default function App() {
         Skip to main content
       </a>
 
-      <Navbar />
+      <Navbar onOpenLegalModal={handleOpenLegalModal} />
 
       <main id="main-content">
         <HomeSection />
@@ -28,13 +42,17 @@ export default function App() {
         <AdvocateProfiles />
         <ClientEngagement />
         <CourtsSection />
-        <ConfidentialitySection />
-        <LegalDisclaimer />
-        <PrivacyPolicy />
         <FaqSection />
       </main>
 
-      <Footer />
+      <Footer onOpenLegalModal={handleOpenLegalModal} />
+
+      <LegalInformationDialog
+        isOpen={isLegalModalOpen}
+        activeTab={activeLegalTab}
+        onClose={handleCloseLegalModal}
+        onTabChange={setActiveLegalTab}
+      />
     </div>
   );
 }

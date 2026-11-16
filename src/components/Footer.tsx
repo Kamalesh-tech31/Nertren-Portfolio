@@ -1,8 +1,13 @@
 import React from 'react';
 import { FIRM_INFO, OFFICE_CONTACT } from '../data/firmData';
 import { LEGAL_NAV_ITEMS, PRIMARY_NAV_ITEMS } from '../utils/navigation';
+import type { LegalTabId } from './LegalInformationDialog';
 
-export const Footer: React.FC = () => {
+export interface FooterProps {
+  onOpenLegalModal?: (tab: LegalTabId) => void;
+}
+
+export const Footer: React.FC<FooterProps> = ({ onOpenLegalModal }) => {
   const handleSmoothScroll = (
     event: React.MouseEvent<HTMLAnchorElement>,
     sectionId: string
@@ -12,6 +17,16 @@ export const Footer: React.FC = () => {
     if (target) {
       target.scrollIntoView({ behavior: 'smooth', block: 'start' });
       window.history.replaceState(null, '', `#${sectionId}`);
+    }
+  };
+
+  const handleLegalItemClick = (
+    event: React.MouseEvent<HTMLAnchorElement | HTMLButtonElement>,
+    tabId: string
+  ) => {
+    event.preventDefault();
+    if (onOpenLegalModal) {
+      onOpenLegalModal(tabId as LegalTabId);
     }
   };
 
@@ -56,7 +71,7 @@ export const Footer: React.FC = () => {
                 <li key={item.id}>
                   <a
                     href={`#${item.id}`}
-                    onClick={(e) => handleSmoothScroll(e, item.id)}
+                    onClick={(e) => handleLegalItemClick(e, item.id)}
                     className="text-muted-foreground hover:text-foreground underline-offset-4 hover:underline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-primary"
                   >
                     {item.label}

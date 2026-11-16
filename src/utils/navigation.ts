@@ -16,7 +16,8 @@ export const PRIMARY_NAV_ITEMS: NavItem[] = [
 export const LEGAL_NAV_ITEMS: NavItem[] = [
   { id: 'confidentiality', label: 'Confidentiality' },
   { id: 'disclaimer', label: 'Website Disclaimer & BCI Compliance Notice' },
-  { id: 'privacy-terms', label: 'Privacy Policy & Terms of Use' },
+  { id: 'privacy', label: 'Privacy Policy' },
+  { id: 'terms', label: 'Terms of Use' },
 ];
 
 export const ALL_SECTION_IDS: string[] = [
@@ -25,9 +26,6 @@ export const ALL_SECTION_IDS: string[] = [
   'advocates',
   'client-engagement',
   'courts',
-  'confidentiality',
-  'disclaimer',
-  'privacy-terms',
   'faq',
   'contact',
 ];
