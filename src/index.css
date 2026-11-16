@@ -1,0 +1,89 @@
+@import "tailwindcss";
+
+:root {
+  --background: #ffffff;
+  --foreground: #382f29;
+  --card: #ffffff;
+  --card-foreground: #382f29;
+  --popover: #ffffff;
+  --popover-foreground: #382f29;
+  --primary: #a17c55;
+  --primary-foreground: #ffffff;
+  --secondary: #f7f5f2;
+  --secondary-foreground: #382f29;
+  --muted: #f7f5f2;
+  --muted-foreground: #64748b;
+  --accent: #f7f5f2;
+  --accent-foreground: #382f29;
+  --border: #e7e1da;
+  --input: #e7e1da;
+  --ring: #a17c55;
+  --chart-1: #a17c55;
+  --chart-2: #382f29;
+  --chart-3: #64748b;
+  --chart-4: #b69a7a;
+  --chart-5: #94a3b8;
+  --radius: 0.75rem;
+}
+
+@theme inline {
+  --font-serif: "Cormorant Garamond", Georgia, "Times New Roman", serif;
+  --font-sans: "Plus Jakarta Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+  --color-chart-1: var(--chart-1);
+  --color-chart-2: var(--chart-2);
+  --color-chart-3: var(--chart-3);
+  --color-chart-4: var(--chart-4);
+  --color-chart-5: var(--chart-5);
+}
+
+@layer base {
+  * {
+    border-color: var(--border);
+  }
+
+  html {
+    font-family: var(--font-sans);
+    background-color: var(--background);
+    color: var(--foreground);
+    scroll-behavior: smooth;
+  }
+
+  body {
+    background-color: var(--background);
+    color: var(--foreground);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    html {
+      scroll-behavior: auto;
+    }
+    *,
+    *::before,
+    *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+    }
+  }
+}
+
+.section-anchor {
+  scroll-margin-top: 6rem;
+}

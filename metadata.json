@@ -1,0 +1,6 @@
+{
+  "name": "Nertren Law Associates",
+  "description": "Independent litigation and advisory law practice based in Tamil Nadu, India.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
