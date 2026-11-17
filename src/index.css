@@ -2,33 +2,40 @@
 
 :root {
   --background: #ffffff;
-  --foreground: #382f29;
+  --foreground: #49362d;
   --card: #ffffff;
-  --card-foreground: #382f29;
+  --card-foreground: #49362d;
   --popover: #ffffff;
-  --popover-foreground: #382f29;
-  --primary: #a17c55;
+  --popover-foreground: #49362d;
+  --primary: #a77c52;
   --primary-foreground: #ffffff;
-  --secondary: #f7f5f2;
-  --secondary-foreground: #382f29;
-  --muted: #f7f5f2;
+  --secondary: #f2ebe3;
+  --secondary-foreground: #49362d;
+  --muted: #f2ebe3;
   --muted-foreground: #64748b;
-  --accent: #f7f5f2;
-  --accent-foreground: #382f29;
-  --border: #e7e1da;
-  --input: #e7e1da;
-  --ring: #a17c55;
-  --chart-1: #a17c55;
-  --chart-2: #382f29;
+  --accent: #f2ebe3;
+  --accent-foreground: #76543d;
+  --border: #e2d7cc;
+  --input: #d8c2aa;
+  --ring: #a77c52;
+  --deep-cocoa: #49362d;
+  --walnut: #76543d;
+  --muted-bronze: #a77c52;
+  --warm-taupe: #d8c2aa;
+  --pale-sand: #f2ebe3;
+  --slate: #64748b;
+  --chart-1: #a77c52;
+  --chart-2: #49362d;
   --chart-3: #64748b;
-  --chart-4: #b69a7a;
+  --chart-4: #76543d;
   --chart-5: #94a3b8;
   --radius: 0.75rem;
 }
 
 @theme inline {
-  --font-serif: "Cormorant Garamond", Georgia, "Times New Roman", serif;
-  --font-sans: "Plus Jakarta Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  --font-serif: "Manrope", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  --font-editorial: "Manrope", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  --font-sans: "Manrope", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
   --color-background: var(--background);
   --color-foreground: var(--foreground);
   --color-card: var(--card);
@@ -46,6 +53,12 @@
   --color-border: var(--border);
   --color-input: var(--input);
   --color-ring: var(--ring);
+  --color-deep-cocoa: var(--deep-cocoa);
+  --color-walnut: var(--walnut);
+  --color-muted-bronze: var(--muted-bronze);
+  --color-warm-taupe: var(--warm-taupe);
+  --color-pale-sand: var(--pale-sand);
+  --color-slate: var(--slate);
   --color-chart-1: var(--chart-1);
   --color-chart-2: var(--chart-2);
   --color-chart-3: var(--chart-3);
@@ -59,7 +72,7 @@
   }
 
   html {
-    font-family: var(--font-sans);
+    font-family: "Manrope", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
     background-color: var(--background);
     color: var(--foreground);
     scroll-behavior: smooth;

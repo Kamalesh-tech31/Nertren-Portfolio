@@ -8,7 +8,7 @@ import {
   RefreshCw,
   Scale,
 } from 'lucide-react';
-import { JourneyTimeline, type JourneyStep } from '@/components/journey-timeline';
+import { JourneyTimeline, type JourneyStep } from './journey-timeline';
 import { ENGAGEMENT_NOTICE, ENGAGEMENT_STAGES } from '../data/firmData';
 
 const STAGE_ICONS: React.ReactNode[] = [
@@ -33,7 +33,7 @@ export const ClientEngagement: React.FC = () => {
     <section
       id="client-engagement"
       aria-labelledby="engagement-heading"
-      className="section-anchor border-t border-border bg-background py-20 sm:py-24"
+      className="section-anchor border-t border-border bg-[#F2EBE3]/35 py-10 sm:py-12 md:py-14"
     >
       <div className="mx-auto max-w-6xl px-6 sm:px-8 lg:px-10">
         <JourneyTimeline
@@ -43,8 +43,8 @@ export const ClientEngagement: React.FC = () => {
           steps={ENGAGEMENT_STEPS}
         />
 
-        <div className="mx-auto mt-14 max-w-4xl rounded-2xl border border-border bg-card p-6 sm:p-7">
-          <p className="mb-2 text-xs font-medium tracking-[0.14em] uppercase text-primary">
+        <div className="mx-auto mt-8 sm:mt-10 max-w-4xl rounded-2xl border border-border bg-card p-5 sm:p-6 shadow-xs">
+          <p className="mb-2 text-xs font-semibold tracking-[0.14em] uppercase text-primary">
             Commencement of Representation
           </p>
           <p className="text-sm sm:text-base leading-relaxed text-foreground">

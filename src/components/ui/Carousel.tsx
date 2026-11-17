@@ -8,6 +8,9 @@ export interface CarouselItem {
   number: string;
   title: string;
   description: string;
+  imageSrc?: string;
+  imageAlt?: string;
+  imageClassName?: string;
   icon?: IconSvgElement;
 }
 
@@ -48,6 +51,7 @@ export const Carousel: React.FC<CarouselProps> = ({
   const [currentIndex, setCurrentIndex] = useState(0);
   const [dragOffsetPx, setDragOffsetPx] = useState(0);
   const [isDragging, setIsDragging] = useState(false);
+  const [isHovered, setIsHovered] = useState(false);
 
   const viewportRef = useRef<HTMLDivElement>(null);
   const pointerStartXRef = useRef<number | null>(null);
@@ -69,12 +73,18 @@ export const Carousel: React.FC<CarouselProps> = ({
   );
 
   useEffect(() => {
-    if (!autoplay || count <= 1) return;
+    if (typeof window === 'undefined') return;
+    const mediaQuery = window.matchMedia('(prefers-reduced-motion: reduce)');
+    if (mediaQuery.matches) return;
+
+    if (!autoplay || count <= 1 || isHovered || isDragging) return;
+
     const id = window.setInterval(() => {
-      setCurrentIndex((prev) => (prev + 1) % count);
+      goTo(currentIndex + 1);
     }, autoplayInterval);
+
     return () => window.clearInterval(id);
-  }, [autoplay, autoplayInterval, count]);
+  }, [autoplay, autoplayInterval, count, currentIndex, goTo, isHovered, isDragging]);
 
   const handlePointerDown = (e: React.PointerEvent<HTMLDivElement>) => {
     if (!draggable || count <= 1) return;
@@ -145,6 +155,8 @@ export const Carousel: React.FC<CarouselProps> = ({
       aria-label={ariaLabel}
       tabIndex={0}
       onKeyDown={handleKeyDown}
+      onMouseEnter={() => setIsHovered(true)}
+      onMouseLeave={() => setIsHovered(false)}
     >
       <div className="rb-carousel-shell" data-frame={frame ? 'true' : 'false'}>
         <div
@@ -179,24 +191,37 @@ export const Carousel: React.FC<CarouselProps> = ({
                   className="rb-carousel-card"
                   style={aspectRatio ? { aspectRatio: String(aspectRatio) } : undefined}
                 >
-                  <div className="rb-carousel-card-header">
-                    <span className="rb-carousel-number">
-                      Principle {item.number}
-                    </span>
-                    {item.icon && (
-                      <span className="rb-carousel-icon-badge" aria-hidden="true">
-                        <HugeiconsIcon
-                          icon={item.icon}
-                          size={20}
-                          strokeWidth={1.6}
-                        />
-                      </span>
-                    )}
-                  </div>
+                  {item.imageSrc && (
+                    <div className="rb-carousel-media-frame">
+                      <img
+                        src={item.imageSrc}
+                        alt={item.imageAlt || item.title}
+                        loading={idx > 1 ? 'lazy' : undefined}
+                        className={`rb-carousel-media-img ${item.imageClassName || ''}`.trim()}
+                      />
+                    </div>
+                  )}
 
-                  <div className="rb-carousel-card-body">
-                    <h4 className="rb-carousel-title">{item.title}</h4>
-                    <p className="rb-carousel-description">{item.description}</p>
+                  <div className="rb-carousel-card-content">
+                    <div className="rb-carousel-card-header">
+                      <span className="rb-carousel-number">
+                        Principle {item.number}
+                      </span>
+                      {item.icon && (
+                        <span className="rb-carousel-icon-badge" aria-hidden="true">
+                          <HugeiconsIcon
+                            icon={item.icon}
+                            size={18}
+                            strokeWidth={1.6}
+                          />
+                        </span>
+                      )}
+                    </div>
+
+                    <div className="rb-carousel-card-body">
+                      <h4 className="rb-carousel-title">{item.title}</h4>
+                      <p className="rb-carousel-description">{item.description}</p>
+                    </div>
                   </div>
                 </article>
               </div>

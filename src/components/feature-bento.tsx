@@ -3,7 +3,7 @@
 import { useRef, type ReactNode } from "react";
 import { motion, useReducedMotion } from "framer-motion";
 import { MapPin, ShieldCheck } from "lucide-react";
-import { cn } from "@/lib/utils";
+import { cn } from "../lib/utils";
 
 const EASE = [0.32, 0.72, 0, 1] as const;
 
@@ -96,7 +96,7 @@ export function FeatureBento({
         <BentoCell
           index={0}
           reducedMotion={prefersReducedMotion}
-          className="lg:col-span-4 justify-between p-7 sm:p-10"
+          className="lg:col-span-4 justify-between p-6 sm:p-8"
         >
           <div>
             <p className="text-xs font-medium uppercase tracking-[0.2em] text-primary">
@@ -104,21 +104,21 @@ export function FeatureBento({
             </p>
             <h1
               id="home-heading"
-              className="mt-4 font-serif text-3xl sm:text-5xl lg:text-[3.25rem] font-semibold leading-[1.08] tracking-tight text-foreground text-balance"
+              className="mt-3.5 font-serif text-3xl sm:text-5xl lg:text-[3.25rem] font-semibold leading-[1.08] tracking-tight text-foreground text-balance"
             >
               {heading}
             </h1>
-            <p className="mt-6 max-w-2xl text-base sm:text-lg leading-relaxed text-muted-foreground">
+            <p className="mt-5 max-w-2xl text-base sm:text-lg leading-relaxed text-muted-foreground">
               {description}
             </p>
             {secondaryDescription && (
-              <p className="mt-4 max-w-2xl text-sm sm:text-base leading-relaxed text-muted-foreground">
+              <p className="mt-3.5 max-w-2xl text-sm sm:text-base leading-relaxed text-muted-foreground">
                 {secondaryDescription}
               </p>
             )}
           </div>
 
-          <div className="mt-10 border-t border-border pt-5 flex flex-wrap items-center justify-between gap-4">
+          <div className="mt-8 border-t border-border pt-4 flex flex-wrap items-center justify-between gap-4">
             <span className="inline-flex items-center gap-2 text-xs font-medium tracking-[0.14em] uppercase text-foreground">
               <MapPin className="size-3.5 text-primary" aria-hidden="true" />
               <span>{locationLabel}</span>
@@ -132,18 +132,18 @@ export function FeatureBento({
           <BentoCell
             index={1}
             reducedMotion={prefersReducedMotion}
-            className="flex-1"
+            className="flex-1 p-5 sm:p-6"
           >
             <div className="flex items-center gap-3">
               <span className="grid size-9 shrink-0 place-items-center rounded-xl bg-primary/10 text-primary">
                 <MapPin className="size-4" aria-hidden="true" />
               </span>
-              <h2 className="font-serif text-xl font-semibold tracking-tight text-card-foreground">
+              <h2 className="font-editorial text-xl font-semibold tracking-tight text-card-foreground">
                 {presenceTitle}
               </h2>
             </div>
 
-            <ul className="mt-5 space-y-2.5 text-sm leading-relaxed text-muted-foreground">
+            <ul className="mt-4 space-y-2 text-sm leading-relaxed text-muted-foreground">
               {presenceItems.map((item) => (
                 <li
                   key={item}
@@ -159,18 +159,18 @@ export function FeatureBento({
           <BentoCell
             index={2}
             reducedMotion={prefersReducedMotion}
-            className="flex-1"
+            className="flex-1 p-5 sm:p-6"
           >
             <div className="flex items-center gap-3">
               <span className="grid size-9 shrink-0 place-items-center rounded-xl bg-primary/10 text-primary">
                 <ShieldCheck className="size-4" aria-hidden="true" />
               </span>
-              <h2 className="font-serif text-xl font-semibold tracking-tight text-card-foreground">
+              <h2 className="font-editorial text-xl font-semibold tracking-tight text-card-foreground">
                 {foundationsTitle}
               </h2>
             </div>
 
-            <ul className="mt-5 grid grid-cols-1 gap-2 text-sm text-muted-foreground">
+            <ul className="mt-4 grid grid-cols-1 gap-1.5 text-sm text-muted-foreground">
               {foundationsItems.map((item) => (
                 <li
                   key={item}

@@ -20,7 +20,7 @@ import {
   DISCLAIMER_BLOCKS,
 } from '../data/firmData';
 
-test('navigation has exact 7 required primary items and 3 legal compliance items', () => {
+test('navigation has exact 7 required primary items and 4 legal compliance items', () => {
   assert.equal(PRIMARY_NAV_ITEMS.length, 7);
   assert.deepEqual(
     PRIMARY_NAV_ITEMS.map((item) => ({ id: item.id, label: item.label })),
@@ -34,7 +34,16 @@ test('navigation has exact 7 required primary items and 3 legal compliance items
       { id: 'contact', label: 'Contact' },
     ]
   );
-  assert.equal(LEGAL_NAV_ITEMS.length, 3);
+  assert.equal(LEGAL_NAV_ITEMS.length, 4);
+  assert.deepEqual(
+    LEGAL_NAV_ITEMS.map((item) => ({ id: item.id, label: item.label })),
+    [
+      { id: 'confidentiality', label: 'Confidentiality' },
+      { id: 'disclaimer', label: 'Website Disclaimer & BCI Compliance Notice' },
+      { id: 'privacy', label: 'Privacy Policy' },
+      { id: 'terms', label: 'Terms of Use' },
+    ]
+  );
 });
 
 test('navbar stays visible near top of page regardless of scroll direction', () => {
@@ -110,14 +119,9 @@ test('mapActivePrimaryNavId handles primary and legal disclosure sections cleanl
 
 test('timeline progress and step state compute accurately across 7 stages', () => {
   assert.equal(computeTimelineProgress(-1, 7), 0);
-  assert.equal(
-    Number(computeTimelineProgress(0, 7).toFixed(2)),
-    Number(((0.5 / 7) * 100).toFixed(2))
-  );
-  assert.equal(
-    Number(computeTimelineProgress(6, 7).toFixed(2)),
-    Number(((6.5 / 7) * 100).toFixed(2))
-  );
+  assert.equal(computeTimelineProgress(0, 7), 0);
+  assert.equal(computeTimelineProgress(3, 7), 50);
+  assert.equal(computeTimelineProgress(6, 7), 100);
 
   assert.equal(getTimelineStepState(0, 3, 3), 'completed');
   assert.equal(getTimelineStepState(3, 3, 3), 'active');

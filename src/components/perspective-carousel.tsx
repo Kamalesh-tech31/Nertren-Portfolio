@@ -3,20 +3,23 @@
 import React, { useEffect, useRef, useState } from "react";
 import { motion, useReducedMotion } from "framer-motion";
 import { ChevronLeft, ChevronRight, X } from "lucide-react";
-import { cn } from "@/lib/utils";
+import { cn } from "../lib/utils";
 import type { AdvocateProfile } from "../data/firmData";
 
 function PortraitMedia({
   profile,
+  isCenter = false,
   className,
 }: {
   profile: AdvocateProfile;
+  isCenter?: boolean;
   className?: string;
 }) {
   const [failed, setFailed] = useState(false);
+  const isConfirmed = profile.photo?.isConfirmed ?? true;
   const src = (profile.imageSrc || profile.photo?.src || "").trim();
 
-  if (!src || failed) {
+  if (!src || failed || !isConfirmed) {
     return (
       <div
         className={cn(
@@ -24,12 +27,12 @@ function PortraitMedia({
           className
         )}
       >
-        <div className="flex size-24 items-center justify-center rounded-full border border-primary/40 bg-card shadow-xs">
-          <span className="font-serif text-3xl font-semibold tracking-wider text-foreground">
+        <div className="flex size-20 sm:size-24 items-center justify-center rounded-full border border-primary/40 bg-card shadow-xs">
+          <span className="font-serif text-2xl sm:text-3xl font-semibold tracking-wider text-foreground">
             {profile.initials}
           </span>
         </div>
-        <p className="mt-4 text-[11px] font-medium uppercase tracking-[0.2em] text-primary">
+        <p className="mt-3.5 text-[11px] font-semibold uppercase tracking-[0.2em] text-primary">
           {profile.roleTitle}
         </p>
         <p className="mt-1 text-xs text-muted-foreground tabular-nums">
@@ -44,9 +47,23 @@ function PortraitMedia({
       src={src}
       alt={profile.photo?.alt || `Portrait of ${profile.name}`}
       draggable={false}
-      loading="lazy"
+      loading={isCenter ? "eager" : "lazy"}
+      decoding="async"
       onError={() => setFailed(true)}
-      className={cn("size-full object-cover object-top", className)}
+      style={{
+        filter: isCenter ? "none" : "blur(5px)",
+        opacity: isCenter ? 1 : 0.52,
+        transform: "translateZ(0)",
+        imageRendering: "auto",
+        objectFit: "cover",
+        objectPosition: "top center",
+        transition: "filter 0.45s ease, opacity 0.45s ease",
+      }}
+      className={cn(
+        "size-full object-cover object-[top_center] will-change-[filter,opacity]",
+        isCenter ? "opacity-100 filter-none" : "opacity-50",
+        className
+      )}
     />
   );
 }
@@ -65,14 +82,14 @@ export interface PerspectiveCarouselProps {
  */
 export function PerspectiveCarousel({
   profiles,
-  autoplay = false,
+  autoplay = true,
   interval = 5000,
   className,
 }: PerspectiveCarouselProps) {
   const prefersReducedMotion = Boolean(useReducedMotion());
   const n = profiles.length;
   const [index, setIndex] = useState(0);
-  const [auto, setAuto] = useState(autoplay);
+  const [isHovered, setIsHovered] = useState(false);
   const [flippedId, setFlippedId] = useState<string | null>(null);
   const [modalProfile, setModalProfile] = useState<AdvocateProfile | null>(null);
 
@@ -80,10 +97,10 @@ export function PerspectiveCarousel({
   const closeButtonRef = useRef<HTMLButtonElement>(null);
 
   useEffect(() => {
-    if (!auto || n <= 1) return;
+    if (!autoplay || n <= 1 || isHovered || modalProfile !== null || prefersReducedMotion) return;
     const id = window.setInterval(() => setIndex((i) => (i + 1) % n), interval);
     return () => window.clearInterval(id);
-  }, [auto, interval, n]);
+  }, [autoplay, interval, n, isHovered, modalProfile, prefersReducedMotion]);
 
   useEffect(() => {
     if (!modalProfile) return;
@@ -108,7 +125,6 @@ export function PerspectiveCarousel({
   }, [modalProfile]);
 
   const go = (to: number) => {
-    setAuto(false);
     setFlippedId(null);
     setIndex(((to % n) + n) % n);
   };
@@ -129,9 +145,11 @@ export function PerspectiveCarousel({
   return (
     <>
       <div
-        className={cn("w-full overflow-hidden py-8 outline-none", className)}
+        className={cn("w-full overflow-hidden py-5 sm:py-6 outline-none", className)}
         tabIndex={0}
         aria-label="Advocate profiles perspective carousel"
+        onMouseEnter={() => setIsHovered(true)}
+        onMouseLeave={() => setIsHovered(false)}
         onKeyDown={(e) => {
           if (e.key === "ArrowRight") {
             e.preventDefault();
@@ -143,7 +161,7 @@ export function PerspectiveCarousel({
         }}
       >
         <motion.div
-          className="relative mx-auto h-[25.5rem] sm:h-[27rem] w-full max-w-4xl [perspective:1400px]"
+          className="relative mx-auto h-[24rem] sm:h-[25.5rem] w-full max-w-4xl [perspective:1400px]"
           drag="x"
           dragConstraints={{ left: 0, right: 0 }}
           dragElastic={0.18}
@@ -214,7 +232,7 @@ export function PerspectiveCarousel({
                     )}
                   >
                     <div className="relative flex-1 overflow-hidden bg-muted">
-                      <PortraitMedia profile={profile} />
+                      <PortraitMedia profile={profile} isCenter={isCenter} />
                       <div
                         aria-hidden="true"
                         className="pointer-events-none absolute inset-x-0 bottom-0 h-24 bg-gradient-to-t from-card via-card/70 to-transparent"
@@ -222,21 +240,12 @@ export function PerspectiveCarousel({
                     </div>
 
                     <figcaption className="relative border-t border-border bg-card px-5 py-4">
-                      <div className="flex items-center justify-between gap-2">
-                        <span className="inline-flex items-center gap-1.5 text-[11px] font-semibold uppercase tracking-[0.16em] text-primary tabular-nums">
-                          <span className="size-1.5 rounded-full bg-primary" aria-hidden="true" />
-                          Profile {profile.number}
-                        </span>
-                        <span className="text-[11px] font-medium text-muted-foreground tabular-nums">
-                          {profile.enrolmentNumber}
-                        </span>
-                      </div>
-
-                      <p className="mt-1.5 font-serif text-xl font-semibold tracking-tight text-foreground">
-                        {profile.name}
-                      </p>
-                      <p className="text-xs text-muted-foreground">
+                      <p className="text-[11px] font-semibold uppercase tracking-[0.16em] text-primary">
                         {profile.roleTitle}
+                      </p>
+
+                      <p className="mt-1 font-editorial text-xl font-semibold tracking-tight text-foreground">
+                        {profile.name}
                       </p>
 
                       {isCenter && (
@@ -266,7 +275,7 @@ export function PerspectiveCarousel({
                       <p className="text-xs font-semibold uppercase tracking-[0.16em] text-primary">
                         {profile.roleTitle}
                       </p>
-                      <h3 className="mt-1.5 font-serif text-2xl font-semibold text-foreground">
+                      <h3 className="mt-1.5 font-editorial text-2xl font-semibold text-foreground">
                         {profile.name}
                       </h3>
                       <p className="mt-4 text-sm leading-relaxed text-muted-foreground">
@@ -274,10 +283,7 @@ export function PerspectiveCarousel({
                       </p>
                     </div>
 
-                    <div className="border-t border-border pt-4 flex items-center justify-between gap-2">
-                      <span className="text-xs font-medium text-muted-foreground tabular-nums">
-                        {profile.enrolmentNumber}
-                      </span>
+                    <div className="border-t border-border pt-4 flex items-center justify-end">
                       <button
                         type="button"
                         onClick={() => openProfile(profile)}
@@ -387,7 +393,7 @@ export function PerspectiveCarousel({
             <div className="grid grid-cols-1 gap-6 sm:grid-cols-12 sm:gap-8">
               <div className="sm:col-span-5">
                 <div className="aspect-[4/5] w-full overflow-hidden rounded-2xl border border-border bg-muted">
-                  <PortraitMedia profile={modalProfile} />
+                  <PortraitMedia profile={modalProfile} isCenter={true} />
                 </div>
               </div>
 
@@ -398,7 +404,7 @@ export function PerspectiveCarousel({
                   </p>
                   <h3
                     id="advocate-modal-title"
-                    className="mt-1 font-serif text-2xl sm:text-3xl font-semibold text-foreground"
+                    className="mt-1 font-editorial text-2xl sm:text-3xl font-semibold text-foreground"
                   >
                     {modalProfile.name}
                   </h3>

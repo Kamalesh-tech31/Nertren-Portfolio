@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { Menu, X } from 'lucide-react';
-import { cn } from '@/lib/utils';
+import { cn } from '../lib/utils';
 import {
   ALL_SECTION_IDS,
   LEGAL_NAV_ITEMS,
@@ -10,7 +10,18 @@ import {
   mapActivePrimaryNavId,
 } from '../utils/navigation';
 
-export const Navbar: React.FC = () => {
+const LEGAL_HASH_MAP: Record<string, string> = {
+  confidentiality: '#/confidentiality',
+  disclaimer: '#/disclaimer',
+  privacy: '#/privacy',
+  terms: '#/terms',
+};
+
+export interface NavbarProps {
+  onOpenLegalModal?: (tab: string) => void;
+}
+
+export const Navbar: React.FC<NavbarProps> = () => {
   const [visible, setVisible] = useState(true);
   const [hasScrolled, setHasScrolled] = useState(false);
   const [activeNavId, setActiveNavId] = useState('home');
@@ -145,6 +156,16 @@ export const Navbar: React.FC = () => {
     }
   };
 
+  const handleLegalLinkClick = (
+    event: React.MouseEvent<HTMLAnchorElement>,
+    tabId: string
+  ) => {
+    event.preventDefault();
+    setIsMenuOpen(false);
+    const hash = LEGAL_HASH_MAP[tabId] ?? `#/confidentiality`;
+    window.location.hash = hash.replace(/^#/, '');
+  };
+
   return (
     <>
       <header
@@ -266,7 +287,7 @@ export const Navbar: React.FC = () => {
                   <li key={item.id}>
                     <a
                       href={`#${item.id}`}
-                      onClick={(e) => handleLinkClick(e, item.id)}
+                      onClick={(e) => handleLegalLinkClick(e, item.id)}
                       className="flex min-h-[44px] items-center py-2.5 text-sm text-muted-foreground hover:text-foreground focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary"
                     >
                       {item.label}
