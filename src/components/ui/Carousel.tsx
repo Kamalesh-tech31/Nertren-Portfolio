@@ -8,6 +8,9 @@ export interface CarouselItem {
   number: string;
   title: string;
   description: string;
+  imageSrc?: string;
+  imageAlt?: string;
+  imageClassName?: string;
   icon?: IconSvgElement;
 }
 
@@ -179,24 +182,37 @@ export const Carousel: React.FC<CarouselProps> = ({
                   className="rb-carousel-card"
                   style={aspectRatio ? { aspectRatio: String(aspectRatio) } : undefined}
                 >
-                  <div className="rb-carousel-card-header">
-                    <span className="rb-carousel-number">
-                      Principle {item.number}
-                    </span>
-                    {item.icon && (
-                      <span className="rb-carousel-icon-badge" aria-hidden="true">
-                        <HugeiconsIcon
-                          icon={item.icon}
-                          size={20}
-                          strokeWidth={1.6}
-                        />
-                      </span>
-                    )}
-                  </div>
+                  {item.imageSrc && (
+                    <div className="rb-carousel-media-frame">
+                      <img
+                        src={item.imageSrc}
+                        alt={item.imageAlt || item.title}
+                        loading={idx > 1 ? 'lazy' : undefined}
+                        className={`rb-carousel-media-img ${item.imageClassName || ''}`.trim()}
+                      />
+                    </div>
+                  )}
 
-                  <div className="rb-carousel-card-body">
-                    <h4 className="rb-carousel-title">{item.title}</h4>
-                    <p className="rb-carousel-description">{item.description}</p>
+                  <div className="rb-carousel-card-content">
+                    <div className="rb-carousel-card-header">
+                      <span className="rb-carousel-number">
+                        Principle {item.number}
+                      </span>
+                      {item.icon && (
+                        <span className="rb-carousel-icon-badge" aria-hidden="true">
+                          <HugeiconsIcon
+                            icon={item.icon}
+                            size={18}
+                            strokeWidth={1.6}
+                          />
+                        </span>
+                      )}
+                    </div>
+
+                    <div className="rb-carousel-card-body">
+                      <h4 className="rb-carousel-title">{item.title}</h4>
+                      <p className="rb-carousel-description">{item.description}</p>
+                    </div>
                   </div>
                 </article>
               </div>

@@ -120,23 +120,20 @@ export const FaqSearch: React.FC<FaqSearchProps> = ({
     <div className={cn('w-full', className)}>
       {showHeader && (
         <div className="mx-auto max-w-3xl text-center">
-          <p className="text-xs font-medium tracking-[0.16em] uppercase text-primary">
-            INFORMATION &amp; GUIDANCE
-          </p>
           <h2
             id="faq-heading"
-            className="mt-3 font-serif text-3xl sm:text-4xl lg:text-5xl font-semibold tracking-tight text-foreground"
+            className="font-editorial text-3xl sm:text-4xl lg:text-5xl font-semibold tracking-tight text-foreground"
           >
             Frequently Asked Questions
           </h2>
-          <p className="mt-4 text-base sm:text-lg leading-relaxed text-muted-foreground">
+          <p className="mt-3.5 text-base sm:text-lg leading-relaxed text-muted-foreground">
             Find general information regarding the firm&apos;s professional practice, jurisdiction, internship criteria and professional correspondence.
           </p>
         </div>
       )}
 
       {/* Live Search and Topic Filter Controls */}
-      <div className="mx-auto mt-10 max-w-2xl space-y-5">
+      <div className="mx-auto mt-7 sm:mt-8 max-w-2xl space-y-4">
         <div className="relative">
           <Search
             className="pointer-events-none absolute left-4 top-1/2 size-4 -translate-y-1/2 text-muted-foreground"
@@ -148,7 +145,7 @@ export const FaqSearch: React.FC<FaqSearchProps> = ({
             onChange={(e) => setQuery(e.target.value)}
             placeholder="Search questions..."
             aria-label="Search questions"
-            className="h-12 w-full rounded-xl border border-border bg-card pl-11 pr-10 text-sm text-foreground outline-none transition-colors placeholder:text-muted-foreground/70 focus:border-primary focus:ring-2 focus:ring-primary/20"
+            className="h-11 sm:h-12 w-full rounded-xl border border-border bg-card pl-11 pr-10 text-sm text-foreground outline-none transition-colors placeholder:text-muted-foreground/70 focus:border-primary focus:ring-2 focus:ring-primary/20"
           />
           {query.trim().length > 0 && (
             <button
@@ -179,7 +176,7 @@ export const FaqSearch: React.FC<FaqSearchProps> = ({
                 className={cn(
                   'rounded-full px-3.5 py-1.5 text-xs font-medium transition-all focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary',
                   isSelected
-                    ? 'bg-primary text-primary-foreground shadow-sm'
+                    ? 'bg-primary text-primary-foreground shadow-sm font-semibold'
                     : 'border border-border bg-card/60 text-muted-foreground hover:border-primary/40 hover:text-foreground'
                 )}
               >
@@ -191,14 +188,14 @@ export const FaqSearch: React.FC<FaqSearchProps> = ({
       </div>
 
       {/* Accordion Rows */}
-      <div className="mx-auto mt-10 max-w-3xl divide-y divide-border border-t border-b border-border">
+      <div className="mx-auto mt-7 sm:mt-8 max-w-3xl divide-y divide-border border-t border-b border-border">
         {results.map((item) => {
           const isOpen = openItemId === item.id;
           const buttonId = `faq-btn-${item.id}`;
           const panelId = `faq-panel-${item.id}`;
 
           return (
-            <div key={item.id} className="py-1">
+            <div key={item.id} className="py-0.5">
               <h3>
                 <button
                   id={buttonId}
@@ -206,9 +203,9 @@ export const FaqSearch: React.FC<FaqSearchProps> = ({
                   aria-expanded={isOpen}
                   aria-controls={panelId}
                   onClick={() => toggleItem(item.id)}
-                  className="flex w-full items-center justify-between gap-4 py-4 text-left transition-colors hover:text-primary focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary"
+                  className="flex w-full items-center justify-between gap-4 py-3.5 sm:py-4 text-left transition-colors hover:text-primary focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary"
                 >
-                  <span className="font-serif text-lg sm:text-xl font-medium leading-snug text-foreground">
+                  <span className="font-sans text-base sm:text-lg font-medium leading-snug text-foreground">
                     <HighlightText text={item.question} query={query} />
                   </span>
                   <span

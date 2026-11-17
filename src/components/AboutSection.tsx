@@ -29,6 +29,9 @@ const CAROUSEL_ITEMS: CarouselItem[] = APPROACH_CARDS.map((card, index) => ({
   number: card.number,
   title: card.title,
   description: card.description,
+  imageSrc: card.imageSrc,
+  imageAlt: card.imageAlt,
+  imageClassName: card.imageClassName,
   icon: APPROACH_ICONS[index],
 }));
 
@@ -37,19 +40,17 @@ export const AboutSection: React.FC = () => {
     <section
       id="about"
       aria-labelledby="about-heading"
-      className="section-anchor border-t border-border bg-background py-20 sm:py-24"
+      className="section-anchor border-t border-border bg-background py-14 sm:py-16 md:py-20"
     >
       <div className="mx-auto max-w-6xl px-6 sm:px-8 lg:px-10">
         <SectionHeader
           headingId="about-heading"
-          sectionNumber="02"
-          label="About the Firm"
           title={ABOUT_FIRM.heading}
         />
 
-        <div className="grid grid-cols-1 gap-10 lg:grid-cols-12 lg:items-start lg:gap-12">
+        <div className="grid grid-cols-1 gap-8 lg:grid-cols-12 lg:items-start lg:gap-10">
           {/* Left Column — Firm Background & Case Evaluation Standard */}
-          <div className="min-w-0 lg:col-span-6 space-y-5">
+          <div className="min-w-0 lg:col-span-6 space-y-4">
             <p className="text-base sm:text-lg leading-relaxed text-foreground">
               {ABOUT_FIRM.lead}
             </p>
@@ -61,7 +62,7 @@ export const AboutSection: React.FC = () => {
             </p>
 
             <div className="rounded-2xl border border-border bg-card p-5 sm:p-6">
-              <p className="mb-2 text-xs font-medium tracking-[0.14em] uppercase text-primary">
+              <p className="mb-2 text-xs font-semibold tracking-[0.14em] uppercase text-primary">
                 Case Evaluation Standard
               </p>
               <blockquote className="font-serif text-lg sm:text-xl leading-relaxed text-foreground">
@@ -72,8 +73,11 @@ export const AboutSection: React.FC = () => {
 
           {/* Right Column — Compact Eight-Card Approach Carousel */}
           <div className="min-w-0 lg:col-span-6">
-            <p className="mb-4 text-xs font-medium tracking-[0.16em] uppercase text-primary">
+            <p className="mb-3 text-xs font-semibold tracking-[0.16em] uppercase text-primary">
               {APPROACH_SUBSECTION.eyebrow}
+            </p>
+            <p className="mb-4 text-xs sm:text-sm leading-relaxed text-muted-foreground">
+              {APPROACH_SUBSECTION.supportingText}
             </p>
             <Carousel
               items={CAROUSEL_ITEMS}

@@ -106,18 +106,18 @@ function Step({
       >
         <p
           className={cn(
-            "text-xs font-medium uppercase tracking-widest transition-colors duration-300",
+            "text-xs font-semibold uppercase tracking-widest transition-colors duration-300",
             isHighlighted ? "text-primary" : "text-muted-foreground"
           )}
         >
           {step.date}
         </p>
-        <h3 className="mt-1.5 font-serif text-xl sm:text-2xl font-semibold tracking-tight text-foreground text-balance">
+        <h3 className="mt-1 font-editorial text-xl sm:text-2xl font-semibold tracking-tight text-foreground text-balance">
           {step.title}
         </h3>
         <p
           className={cn(
-            "mt-2.5 rounded-2xl border bg-card p-5 text-left text-sm leading-relaxed text-muted-foreground transition-colors duration-500",
+            "mt-2 rounded-2xl border bg-card p-4 sm:p-5 text-left text-sm leading-relaxed text-muted-foreground transition-colors duration-500",
             isActive
               ? "border-primary/55"
               : isHighlighted
@@ -173,23 +173,23 @@ export function JourneyTimeline({
   return (
     <div className={cn("w-full", className)}>
       <div className="mx-auto max-w-3xl text-center">
-        <p className="text-xs font-medium uppercase tracking-[0.16em] text-primary">
+        <p className="text-xs font-semibold uppercase tracking-[0.16em] text-primary">
           {eyebrow}
         </p>
         <h2
           id="engagement-heading"
-          className="mt-3 font-serif text-3xl sm:text-4xl font-semibold tracking-tight text-foreground text-balance"
+          className="mt-2.5 font-editorial text-3xl sm:text-4xl font-semibold tracking-tight text-foreground text-balance"
         >
           {title}
         </h2>
         {description && (
-          <p className="mt-4 text-base leading-relaxed text-muted-foreground">
+          <p className="mt-3.5 text-base leading-relaxed text-muted-foreground">
             {description}
           </p>
         )}
       </div>
 
-      <div className="relative mx-auto mt-14 max-w-4xl">
+      <div className="relative mx-auto mt-10 sm:mt-12 max-w-4xl">
         <span
           aria-hidden="true"
           className="pointer-events-none absolute bottom-4 left-6 top-4 w-[2px] -translate-x-1/2 bg-border md:left-1/2"
@@ -205,7 +205,7 @@ export function JourneyTimeline({
         </span>
         <ol
           aria-label="Client Engagement Stages"
-          className="relative flex flex-col gap-12 md:gap-16"
+          className="relative flex flex-col gap-10 md:gap-14"
         >
           {steps.map((s, i) => (
             <Step

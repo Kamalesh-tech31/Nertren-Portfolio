@@ -1,5 +1,5 @@
 import React, { useEffect, useRef } from 'react';
-import { X, ShieldCheck, Scale, FileText, Lock } from 'lucide-react';
+import { X } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import {
   CONFIDENTIALITY_INFO,
@@ -149,7 +149,7 @@ export const LegalInformationDialog: React.FC<LegalInformationDialogProps> = ({
             </p>
             <h2
               id="legal-dialog-heading"
-              className="mt-1 font-serif text-xl sm:text-2xl font-bold tracking-tight text-foreground"
+              className="mt-1 font-editorial text-xl sm:text-2xl font-bold tracking-tight text-foreground"
             >
               LEGAL &amp; PROFESSIONAL INFORMATION
             </h2>
@@ -235,12 +235,6 @@ export const LegalInformationDialog: React.FC<LegalInformationDialogProps> = ({
                 </button>
               );
             })}
-
-            <div className="mt-auto pt-6 border-t border-border/70 text-xs text-muted-foreground leading-relaxed px-2">
-              <p>
-                All legal statements comply with the Bar Council of India Rules.
-              </p>
-            </div>
           </nav>
 
           {/* Right Content Area: Independently Scrollable */}
@@ -255,31 +249,17 @@ export const LegalInformationDialog: React.FC<LegalInformationDialogProps> = ({
                 id="legal-panel-confidentiality"
                 role="tabpanel"
                 aria-labelledby="legal-tab-confidentiality"
-                className="space-y-6 max-w-2xl"
+                className="space-y-5 max-w-2xl"
               >
-                <div className="flex items-center gap-3 border-b border-border pb-4">
-                  <div className="grid size-10 place-items-center rounded-xl bg-primary/10 text-primary shrink-0">
-                    <Lock className="size-5" aria-hidden="true" />
-                  </div>
-                  <div>
-                    <p className="text-xs font-semibold tracking-wider uppercase text-primary">
-                      Section 01 · Professional Standards
-                    </p>
-                    <h3 className="font-serif text-2xl sm:text-3xl font-semibold text-foreground">
-                      {CONFIDENTIALITY_INFO.heading}
-                    </h3>
-                  </div>
+                <div className="border-b border-border pb-4">
+                  <h3 className="font-editorial text-2xl sm:text-3xl font-semibold text-foreground">
+                    01 · PROFESSIONAL STANDARDS
+                  </h3>
                 </div>
 
                 <div className="prose prose-brown max-w-none">
                   <p className="text-base sm:text-lg leading-relaxed text-foreground/90">
                     {CONFIDENTIALITY_INFO.statement}
-                  </p>
-                </div>
-
-                <div className="rounded-xl border border-border bg-muted/30 p-4 text-xs text-muted-foreground leading-relaxed">
-                  <p>
-                    Advocate-client communications are privileged under Indian law, subject strictly to ethical obligations and legal procedure.
                   </p>
                 </div>
               </section>
@@ -290,26 +270,18 @@ export const LegalInformationDialog: React.FC<LegalInformationDialogProps> = ({
                 id="legal-panel-disclaimer"
                 role="tabpanel"
                 aria-labelledby="legal-tab-disclaimer"
-                className="space-y-6"
+                className="space-y-5"
               >
-                <div className="flex items-center gap-3 border-b border-border pb-4">
-                  <div className="grid size-10 place-items-center rounded-xl bg-primary/10 text-primary shrink-0">
-                    <Scale className="size-5" aria-hidden="true" />
-                  </div>
-                  <div>
-                    <p className="text-xs font-semibold tracking-wider uppercase text-primary">
-                      Section 02 · Regulatory Disclosures
-                    </p>
-                    <h3 className="font-serif text-2xl sm:text-3xl font-semibold text-foreground">
-                      Website Disclaimer &amp; BCI Compliance
-                    </h3>
-                  </div>
+                <div className="border-b border-border pb-4">
+                  <h3 className="font-editorial text-2xl sm:text-3xl font-semibold text-foreground">
+                    02 · WEBSITE DISCLAIMER &amp; BCI COMPLIANCE
+                  </h3>
                 </div>
 
                 <div className="divide-y divide-border">
                   {DISCLAIMER_BLOCKS.map((block) => (
-                    <article key={block.title} className="py-5 first:pt-0 last:pb-0 space-y-2">
-                      <h4 className="font-serif text-lg sm:text-xl font-semibold text-foreground">
+                    <article key={block.title} className="py-4 sm:py-5 first:pt-0 last:pb-0 space-y-2">
+                      <h4 className="font-editorial text-lg sm:text-xl font-semibold text-foreground">
                         {block.title}
                       </h4>
                       <p className="text-sm sm:text-base leading-relaxed text-muted-foreground">
@@ -326,31 +298,17 @@ export const LegalInformationDialog: React.FC<LegalInformationDialogProps> = ({
                 id="legal-panel-privacy"
                 role="tabpanel"
                 aria-labelledby="legal-tab-privacy"
-                className="space-y-6 max-w-2xl"
+                className="space-y-5 max-w-2xl"
               >
-                <div className="flex items-center gap-3 border-b border-border pb-4">
-                  <div className="grid size-10 place-items-center rounded-xl bg-primary/10 text-primary shrink-0">
-                    <ShieldCheck className="size-5" aria-hidden="true" />
-                  </div>
-                  <div>
-                    <p className="text-xs font-semibold tracking-wider uppercase text-primary">
-                      Section 03 · Information Practice
-                    </p>
-                    <h3 className="font-serif text-2xl sm:text-3xl font-semibold text-foreground">
-                      {LEGAL_POLICIES.privacyPolicy.title}
-                    </h3>
-                  </div>
+                <div className="border-b border-border pb-4">
+                  <h3 className="font-editorial text-2xl sm:text-3xl font-semibold text-foreground">
+                    03 · INFORMATION PRACTICE
+                  </h3>
                 </div>
 
                 <div className="prose prose-brown max-w-none">
                   <p className="text-base sm:text-lg leading-relaxed text-muted-foreground">
                     {LEGAL_POLICIES.privacyPolicy.body}
-                  </p>
-                </div>
-
-                <div className="rounded-xl border border-border bg-muted/30 p-4 text-xs text-muted-foreground leading-relaxed">
-                  <p>
-                    Note: This statement represents the firm’s currently documented privacy practice. Further specific notices may apply upon entering into a formal client engagement.
                   </p>
                 </div>
               </section>
@@ -361,20 +319,12 @@ export const LegalInformationDialog: React.FC<LegalInformationDialogProps> = ({
                 id="legal-panel-terms"
                 role="tabpanel"
                 aria-labelledby="legal-tab-terms"
-                className="space-y-6 max-w-2xl"
+                className="space-y-5 max-w-2xl"
               >
-                <div className="flex items-center gap-3 border-b border-border pb-4">
-                  <div className="grid size-10 place-items-center rounded-xl bg-primary/10 text-primary shrink-0">
-                    <FileText className="size-5" aria-hidden="true" />
-                  </div>
-                  <div>
-                    <p className="text-xs font-semibold tracking-wider uppercase text-primary">
-                      Section 04 · Website Terms
-                    </p>
-                    <h3 className="font-serif text-2xl sm:text-3xl font-semibold text-foreground">
-                      {LEGAL_POLICIES.termsOfUse.title}
-                    </h3>
-                  </div>
+                <div className="border-b border-border pb-4">
+                  <h3 className="font-editorial text-2xl sm:text-3xl font-semibold text-foreground">
+                    04 · TERMS OF USE
+                  </h3>
                 </div>
 
                 <div className="prose prose-brown max-w-none">

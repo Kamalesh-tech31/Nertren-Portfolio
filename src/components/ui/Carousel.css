@@ -59,51 +59,90 @@
 .rb-carousel-card {
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
   width: 100%;
-  min-height: 240px;
-  padding: 1.5rem;
   background-color: var(--carousel-tile);
   border: 1px solid var(--carousel-tile-edge);
   border-radius: 1.25rem;
   color: var(--carousel-ink);
   box-sizing: border-box;
+  padding: 1.25rem;
+  gap: 1.25rem;
 }
 
 @media (min-width: 640px) {
   .rb-carousel-card {
-    padding: 2rem;
-    min-height: 280px;
+    flex-direction: row;
+    align-items: stretch;
+    height: 310px;
+    min-height: 310px;
+    padding: 1.25rem;
+    gap: 1.35rem;
   }
 }
 
-@media (min-width: 1024px) {
-  .rb-carousel-card {
-    height: 315px;
-    min-height: 315px;
+/* Left side: media frame occupying approximately 38–42% of card width */
+.rb-carousel-media-frame {
+  width: 100%;
+  aspect-ratio: 16 / 10;
+  max-height: 200px;
+  overflow: hidden;
+  border-radius: 0.875rem;
+  border: 1px solid var(--carousel-tile-edge);
+  background-color: var(--muted);
+  flex-shrink: 0;
+}
+
+@media (min-width: 640px) {
+  .rb-carousel-media-frame {
+    flex: 0 0 40%;
+    width: 40%;
+    max-width: 42%;
+    min-width: 38%;
+    height: 100%;
+    max-height: none;
+    aspect-ratio: 4 / 5;
+    margin-bottom: 0;
   }
+}
+
+.rb-carousel-media-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+  display: block;
+}
+
+/* Right side: textual content */
+.rb-carousel-card-content {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  flex: 1 1 60%;
+  min-width: 0;
 }
 
 .rb-carousel-card-header {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: 1rem;
+  gap: 0.75rem;
 }
 
 .rb-carousel-icon-badge {
   display: grid;
   place-items: center;
-  width: 2.75rem;
-  height: 2.75rem;
-  border-radius: 0.75rem;
+  width: 2.25rem;
+  height: 2.25rem;
+  border-radius: 0.625rem;
   background-color: var(--carousel-badge);
   color: var(--carousel-accent);
   flex-shrink: 0;
 }
 
 .rb-carousel-number {
-  font-size: 0.75rem;
+  font-family: var(--font-sans);
+  font-size: 0.6875rem;
   font-weight: 600;
   letter-spacing: 0.16em;
   text-transform: uppercase;
@@ -112,27 +151,28 @@
 }
 
 .rb-carousel-card-body {
-  margin-top: 1.5rem;
+  margin-top: 0.75rem;
 }
 
 .rb-carousel-title {
-  font-family: var(--font-serif);
-  font-size: 1.625rem;
+  font-family: var(--font-editorial);
+  font-size: 1.25rem;
   font-weight: 600;
-  line-height: 1.2;
+  line-height: 1.25;
   color: var(--carousel-ink);
 }
 
 @media (min-width: 640px) {
   .rb-carousel-title {
-    font-size: 1.875rem;
+    font-size: 1.35rem;
   }
 }
 
 .rb-carousel-description {
-  margin-top: 0.75rem;
-  font-size: 0.95rem;
-  line-height: 1.65;
+  margin-top: 0.5rem;
+  font-family: var(--font-sans);
+  font-size: 0.875rem;
+  line-height: 1.55;
   color: var(--carousel-muted);
 }
 

@@ -8,7 +8,7 @@ export const AdvocateProfiles: React.FC = () => {
     <section
       id="advocates"
       aria-labelledby="advocates-heading"
-      className="section-anchor border-t border-border bg-background py-20 sm:py-24"
+      className="section-anchor border-t border-border bg-background py-14 sm:py-16 md:py-20"
     >
       <div className="mx-auto max-w-6xl px-6 sm:px-8 lg:px-10">
         <SectionHeader

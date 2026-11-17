@@ -56,6 +56,7 @@ export interface AdvocatePhotoConfig {
   src: string;
   alt: string;
   positionLabel: string;
+  isConfirmed?: boolean;
 }
 
 /**
@@ -65,19 +66,22 @@ export interface AdvocatePhotoConfig {
  */
 export const ADVOCATE_PHOTO_MAPPING: Record<string, AdvocatePhotoConfig> = {
   'adv-kavin-kumar': {
-    src: '/images/advocates/advocate-1.jpg',
+    src: '/images/advocates/kavin-kumar.png',
     alt: 'Portrait of Adv. T. Kavin Kumar, Founder & Proprietor',
     positionLabel: 'Slot 01',
+    isConfirmed: true,
   },
   'adv-pavithra': {
-    src: '/images/advocates/advocate-2.jpg',
+    src: '/images/advocates/v-pavithra.png',
     alt: 'Portrait of Adv. V. Pavithra, Associate Counsel',
     positionLabel: 'Slot 02',
+    isConfirmed: true,
   },
   'adv-malathi': {
-    src: '/images/advocates/advocate-3.jpg',
+    src: '/images/advocates/malathi-a.png',
     alt: 'Portrait of Adv. Malathi A, Associate Counsel',
     positionLabel: 'Slot 03',
+    isConfirmed: true,
   },
 };
 
@@ -105,7 +109,7 @@ export const ADVOCATES: AdvocateProfile[] = [
     name: 'Adv. T. Kavin Kumar',
     initials: 'TK',
     enrolmentNumber: 'M.S.3172/2021',
-    imageSrc: '/images/advocates/advocate-1.jpg',
+    imageSrc: '/images/advocates/kavin-kumar.png',
     qualifications: [
       'B.E. (Electronics & Communication Engineering)',
       'MBA',
@@ -136,7 +140,7 @@ export const ADVOCATES: AdvocateProfile[] = [
     name: 'Adv. V. Pavithra',
     initials: 'VP',
     enrolmentNumber: 'M.S.738/2022',
-    imageSrc: '/images/advocates/advocate-2.jpg',
+    imageSrc: '/images/advocates/v-pavithra.png',
     shortIntro:
       'Associated with the firm in litigation and court-related matters, including pleadings, procedural compliance, execution of decrees, evidence-related proceedings and court appearances.',
     bio: [
@@ -158,7 +162,7 @@ export const ADVOCATES: AdvocateProfile[] = [
     name: 'Adv. Malathi A',
     initials: 'MA',
     enrolmentNumber: 'M.S.167/2024',
-    imageSrc: '/images/advocates/advocate-3.jpg',
+    imageSrc: '/images/advocates/malathi-a.png',
     shortIntro:
       'Associated with the firm in civil and family disputes, High Court writs and appeals, and other High Court matters.',
     bio: [
@@ -180,6 +184,9 @@ export interface ApproachCardData {
   number: string;
   title: string;
   description: string;
+  imageSrc: string;
+  imageAlt: string;
+  imageClassName?: string;
 }
 
 export const APPROACH_SUBSECTION = {
@@ -193,58 +200,75 @@ export const APPROACH_CARDS: ApproachCardData[] = [
   {
     id: 'approach-01',
     number: '01',
-    title: 'Understanding the Facts',
+    title: 'Meticulous Preparation',
     description:
-      'Begin with careful attention to the circumstances and details of each matter.',
+      'Approach every matter with careful preparation and attention to its legal and factual circumstances.',
+    imageSrc: '/images/approach/01-meticulous-preparation.png',
+    imageAlt: 'Legal agreement and documentation prepared for review',
   },
   {
     id: 'approach-02',
     number: '02',
-    title: 'Legal Research',
+    title: 'Comprehensive Legal Research',
     description:
-      'Examine applicable laws, relevant legal principles and case authorities.',
+      'Undertake comprehensive legal research to understand the applicable law and relevant issues.',
+    imageSrc: '/images/approach/02-legal-research.png',
+    imageAlt: 'Legal treatises and research documents on library desk',
   },
   {
     id: 'approach-03',
     number: '03',
-    title: 'Assessment of Legal Merits',
+    title: 'Careful Assessment of Facts',
     description:
-      'Evaluate the legal merits and practical considerations before accepting a matter.',
+      'Evaluate the facts, available evidence and practical considerations before accepting a matter.',
+    imageSrc: '/images/approach/03-fact-assessment.png',
+    imageAlt: 'Case evaluation records and legal balance on desk',
   },
   {
     id: 'approach-04',
     number: '04',
-    title: 'Evidence Review',
+    title: 'Procedural Compliance',
     description:
-      'Give careful consideration to available evidence and supporting records.',
+      'Give careful attention to procedural requirements throughout legal proceedings.',
+    imageSrc: '/images/approach/04-procedural-compliance.png',
+    imageAlt: 'Procedural records and documentation for case compliance',
   },
   {
     id: 'approach-05',
     number: '05',
-    title: 'Procedural Diligence',
+    title: 'Strategic Advocacy',
     description:
-      'Pay attention to procedural requirements, documentation and compliance.',
+      'Develop a considered approach to representation based on the legal and factual circumstances.',
+    imageSrc: '/images/approach/05-strategic-advocacy.png',
+    imageAlt: 'Advocate reviewing procedural checklist and case files',
   },
   {
     id: 'approach-06',
     number: '06',
-    title: 'Tailored Legal Strategy',
+    title: 'Individual Attention',
     description:
-      "Develop an approach suited to the client's objectives and legal circumstances.",
+      "Give every entrusted matter individual attention, tailored to the client's objectives and legal circumstances.",
+    imageSrc: '/images/approach/06-individual-attention.png',
+    imageAlt: 'Legal strategy diagram and individualized matter planning',
+    imageClassName: 'object-[center_20%]',
   },
   {
     id: 'approach-07',
     number: '07',
-    title: 'Transparent Communication',
+    title: 'Professional Accountability',
     description:
-      'Maintain professional accountability, transparency and timely updates on material developments.',
+      'Maintain professional accountability throughout every engagement.',
+    imageSrc: '/images/approach/07-professional-accountability.png',
+    imageAlt: 'Scales of justice and formal legal documentation on desk',
   },
   {
     id: 'approach-08',
     number: '08',
-    title: 'Long-Term Interests',
+    title: 'Transparency & Timely Updates',
     description:
-      "Consider the client's broader interests when assessing legal options and representation.",
+      'Emphasise transparent communication and timely updates regarding material developments.',
+    imageSrc: '/images/approach/08-transparency-updates.png',
+    imageAlt: 'Counsel and clients discussing case progress in conference',
   },
 ];
 
@@ -521,42 +545,42 @@ export const COURTS_CARDS: CourtJurisdictionCard[] = [
     id: 'madras-high-court',
     title: 'High Court of Judicature at Madras',
     description:
-      'Representation in writ petitions under Articles 226 and 227 of the Constitution of India, appeals, and other High Court matters.',
+      "The firm's stated practice includes writ petitions under Articles 226 and 227 of the Constitution of India, alongside other High Court matters.",
     icon: 'landmark',
   },
   {
     id: 'district-subordinate-courts',
     title: 'District and Subordinate Courts across Tamil Nadu',
     description:
-      'Trial, appellate, and execution proceedings across civil courts in Tamil Nadu, supported from the firm’s headquarters in Erode District.',
+      "The firm identifies District and Subordinate Courts across Tamil Nadu among the forums before which it regularly appears. Its documented practice includes civil litigation and execution proceedings.",
     icon: 'building',
   },
   {
     id: 'chennai-courts-tribunals',
     title: 'Courts and Tribunals in Chennai',
     description:
-      'Active appearances before courts and tribunals in Chennai across civil, commercial, regulatory, and statutory proceedings.',
+      "The firm identifies courts and tribunals in Chennai among the forums before which it appears.",
     icon: 'scale',
   },
   {
     id: 'statutory-quasi-judicial',
     title: 'Statutory Authorities and Quasi-Judicial Forums',
     description:
-      'Representation in matters involving statutory decisions, regulatory compliance, and proceedings before administrative and quasi-judicial authorities.',
+      "The firm's described work includes statutory decisions, administrative actions, regulatory matters and related proceedings before competent authorities.",
     icon: 'gavel',
   },
   {
     id: 'ip-forums',
     title: 'Intellectual Property Related Forums',
     description:
-      'Proceedings and enforcement matters concerning trademarks, passing-off actions, patent disputes, and protection of intellectual property rights.',
+      "The firm's intellectual property practice includes trademark disputes, passing-off actions, patent-related matters, ownership and infringement disputes, and associated enforcement work.",
     icon: 'shield',
   },
   {
     id: 'waqf-hrce-authorities',
     title: 'Waqf and HR&CE Authorities',
     description:
-      'Representation in Waqf administration and estate disputes, and proceedings governed by the Hindu Religious and Charitable Endowments framework.',
+      "The firm's documented practice includes Waqf administration and property-related matters, as well as HR&CE matters involving temple administration, governance and related statutory concerns.",
     icon: 'scroll',
   },
 ];
@@ -613,7 +637,7 @@ export const LEGAL_POLICIES = {
   },
   termsOfUse: {
     title: 'Terms of Use',
-    body: 'Use of this website constitutes acceptance of these terms. The firm reserves the right to modify, add, or amend website text at any time without prior notice.',
+    body: 'Use of this website constitutes acceptance of these terms. The content is purely informational and the firm reserves the right to modify, add, or amend website text at any time without prior notice.',
   },
 } as const;
 

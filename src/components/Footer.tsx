@@ -31,9 +31,9 @@ export const Footer: React.FC<FooterProps> = ({ onOpenLegalModal }) => {
   };
 
   return (
-    <footer className="border-t border-border bg-background pt-16 pb-12">
+    <footer className="border-t border-border bg-background pt-12 pb-10">
       <div className="mx-auto max-w-6xl px-6 sm:px-8 lg:px-10">
-        <div className="grid grid-cols-1 gap-10 sm:grid-cols-2 lg:grid-cols-12 lg:gap-8 pb-12 border-b border-border">
+        <div className="grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-12 lg:gap-8 pb-8 border-b border-border">
           <div className="min-w-0 sm:col-span-2 lg:col-span-4 space-y-4">
             <p className="font-serif text-2xl font-semibold text-foreground">
               {FIRM_INFO.name}
