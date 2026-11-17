@@ -3,7 +3,7 @@
 import { useRef, type ReactNode } from "react";
 import { motion, useReducedMotion } from "framer-motion";
 import { MapPin, ShieldCheck } from "lucide-react";
-import { cn } from "@/lib/utils";
+import { cn } from "../lib/utils";
 
 const EASE = [0.32, 0.72, 0, 1] as const;
 

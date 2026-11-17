@@ -51,6 +51,7 @@ export const Carousel: React.FC<CarouselProps> = ({
   const [currentIndex, setCurrentIndex] = useState(0);
   const [dragOffsetPx, setDragOffsetPx] = useState(0);
   const [isDragging, setIsDragging] = useState(false);
+  const [isHovered, setIsHovered] = useState(false);
 
   const viewportRef = useRef<HTMLDivElement>(null);
   const pointerStartXRef = useRef<number | null>(null);
@@ -72,12 +73,18 @@ export const Carousel: React.FC<CarouselProps> = ({
   );
 
   useEffect(() => {
-    if (!autoplay || count <= 1) return;
+    if (typeof window === 'undefined') return;
+    const mediaQuery = window.matchMedia('(prefers-reduced-motion: reduce)');
+    if (mediaQuery.matches) return;
+
+    if (!autoplay || count <= 1 || isHovered || isDragging) return;
+
     const id = window.setInterval(() => {
-      setCurrentIndex((prev) => (prev + 1) % count);
+      goTo(currentIndex + 1);
     }, autoplayInterval);
+
     return () => window.clearInterval(id);
-  }, [autoplay, autoplayInterval, count]);
+  }, [autoplay, autoplayInterval, count, currentIndex, goTo, isHovered, isDragging]);
 
   const handlePointerDown = (e: React.PointerEvent<HTMLDivElement>) => {
     if (!draggable || count <= 1) return;
@@ -148,6 +155,8 @@ export const Carousel: React.FC<CarouselProps> = ({
       aria-label={ariaLabel}
       tabIndex={0}
       onKeyDown={handleKeyDown}
+      onMouseEnter={() => setIsHovered(true)}
+      onMouseLeave={() => setIsHovered(false)}
     >
       <div className="rb-carousel-shell" data-frame={frame ? 'true' : 'false'}>
         <div

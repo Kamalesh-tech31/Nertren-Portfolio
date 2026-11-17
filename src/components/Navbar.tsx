@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { Menu, X } from 'lucide-react';
-import { cn } from '@/lib/utils';
+import { cn } from '../lib/utils';
 import {
   ALL_SECTION_IDS,
   LEGAL_NAV_ITEMS,
@@ -9,13 +9,19 @@ import {
   getActiveSectionId,
   mapActivePrimaryNavId,
 } from '../utils/navigation';
-import type { LegalTabId } from './LegalInformationDialog';
+
+const LEGAL_HASH_MAP: Record<string, string> = {
+  confidentiality: '#/confidentiality',
+  disclaimer: '#/disclaimer',
+  privacy: '#/privacy',
+  terms: '#/terms',
+};
 
 export interface NavbarProps {
-  onOpenLegalModal?: (tab: LegalTabId) => void;
+  onOpenLegalModal?: (tab: string) => void;
 }
 
-export const Navbar: React.FC<NavbarProps> = ({ onOpenLegalModal }) => {
+export const Navbar: React.FC<NavbarProps> = () => {
   const [visible, setVisible] = useState(true);
   const [hasScrolled, setHasScrolled] = useState(false);
   const [activeNavId, setActiveNavId] = useState('home');
@@ -156,9 +162,8 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenLegalModal }) => {
   ) => {
     event.preventDefault();
     setIsMenuOpen(false);
-    if (onOpenLegalModal) {
-      onOpenLegalModal(tabId as LegalTabId);
-    }
+    const hash = LEGAL_HASH_MAP[tabId] ?? `#/confidentiality`;
+    window.location.hash = hash.replace(/^#/, '');
   };
 
   return (

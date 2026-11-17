@@ -127,8 +127,10 @@ export function computeTimelineProgress(
   if (totalSteps <= 0 || reachedIndex < 0) {
     return 0;
   }
-  const clamped = Math.min(reachedIndex, totalSteps - 1);
-  return Math.min(100, ((clamped + 0.5) / totalSteps) * 100);
+  if (totalSteps === 1 || reachedIndex >= totalSteps - 1) {
+    return 100;
+  }
+  return Math.min(100, (reachedIndex / (totalSteps - 1)) * 100);
 }
 
 export function getTimelineStepState(

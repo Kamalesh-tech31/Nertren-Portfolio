@@ -119,14 +119,9 @@ test('mapActivePrimaryNavId handles primary and legal disclosure sections cleanl
 
 test('timeline progress and step state compute accurately across 7 stages', () => {
   assert.equal(computeTimelineProgress(-1, 7), 0);
-  assert.equal(
-    Number(computeTimelineProgress(0, 7).toFixed(2)),
-    Number(((0.5 / 7) * 100).toFixed(2))
-  );
-  assert.equal(
-    Number(computeTimelineProgress(6, 7).toFixed(2)),
-    Number(((6.5 / 7) * 100).toFixed(2))
-  );
+  assert.equal(computeTimelineProgress(0, 7), 0);
+  assert.equal(computeTimelineProgress(3, 7), 50);
+  assert.equal(computeTimelineProgress(6, 7), 100);
 
   assert.equal(getTimelineStepState(0, 3, 3), 'completed');
   assert.equal(getTimelineStepState(3, 3, 3), 'active');

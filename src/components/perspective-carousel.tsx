@@ -3,14 +3,16 @@
 import React, { useEffect, useRef, useState } from "react";
 import { motion, useReducedMotion } from "framer-motion";
 import { ChevronLeft, ChevronRight, X } from "lucide-react";
-import { cn } from "@/lib/utils";
+import { cn } from "../lib/utils";
 import type { AdvocateProfile } from "../data/firmData";
 
 function PortraitMedia({
   profile,
+  isCenter = false,
   className,
 }: {
   profile: AdvocateProfile;
+  isCenter?: boolean;
   className?: string;
 }) {
   const [failed, setFailed] = useState(false);
@@ -45,9 +47,23 @@ function PortraitMedia({
       src={src}
       alt={profile.photo?.alt || `Portrait of ${profile.name}`}
       draggable={false}
-      loading="lazy"
+      loading={isCenter ? "eager" : "lazy"}
+      decoding="async"
       onError={() => setFailed(true)}
-      className={cn("size-full object-cover object-top", className)}
+      style={{
+        filter: isCenter ? "none" : "blur(5px)",
+        opacity: isCenter ? 1 : 0.52,
+        transform: "translateZ(0)",
+        imageRendering: "auto",
+        objectFit: "cover",
+        objectPosition: "top center",
+        transition: "filter 0.45s ease, opacity 0.45s ease",
+      }}
+      className={cn(
+        "size-full object-cover object-[top_center] will-change-[filter,opacity]",
+        isCenter ? "opacity-100 filter-none" : "opacity-50",
+        className
+      )}
     />
   );
 }
@@ -66,14 +82,14 @@ export interface PerspectiveCarouselProps {
  */
 export function PerspectiveCarousel({
   profiles,
-  autoplay = false,
+  autoplay = true,
   interval = 5000,
   className,
 }: PerspectiveCarouselProps) {
   const prefersReducedMotion = Boolean(useReducedMotion());
   const n = profiles.length;
   const [index, setIndex] = useState(0);
-  const [auto, setAuto] = useState(autoplay);
+  const [isHovered, setIsHovered] = useState(false);
   const [flippedId, setFlippedId] = useState<string | null>(null);
   const [modalProfile, setModalProfile] = useState<AdvocateProfile | null>(null);
 
@@ -81,10 +97,10 @@ export function PerspectiveCarousel({
   const closeButtonRef = useRef<HTMLButtonElement>(null);
 
   useEffect(() => {
-    if (!auto || n <= 1) return;
+    if (!autoplay || n <= 1 || isHovered || modalProfile !== null || prefersReducedMotion) return;
     const id = window.setInterval(() => setIndex((i) => (i + 1) % n), interval);
     return () => window.clearInterval(id);
-  }, [auto, interval, n]);
+  }, [autoplay, interval, n, isHovered, modalProfile, prefersReducedMotion]);
 
   useEffect(() => {
     if (!modalProfile) return;
@@ -109,7 +125,6 @@ export function PerspectiveCarousel({
   }, [modalProfile]);
 
   const go = (to: number) => {
-    setAuto(false);
     setFlippedId(null);
     setIndex(((to % n) + n) % n);
   };
@@ -133,6 +148,8 @@ export function PerspectiveCarousel({
         className={cn("w-full overflow-hidden py-5 sm:py-6 outline-none", className)}
         tabIndex={0}
         aria-label="Advocate profiles perspective carousel"
+        onMouseEnter={() => setIsHovered(true)}
+        onMouseLeave={() => setIsHovered(false)}
         onKeyDown={(e) => {
           if (e.key === "ArrowRight") {
             e.preventDefault();
@@ -215,7 +232,7 @@ export function PerspectiveCarousel({
                     )}
                   >
                     <div className="relative flex-1 overflow-hidden bg-muted">
-                      <PortraitMedia profile={profile} />
+                      <PortraitMedia profile={profile} isCenter={isCenter} />
                       <div
                         aria-hidden="true"
                         className="pointer-events-none absolute inset-x-0 bottom-0 h-24 bg-gradient-to-t from-card via-card/70 to-transparent"
@@ -376,7 +393,7 @@ export function PerspectiveCarousel({
             <div className="grid grid-cols-1 gap-6 sm:grid-cols-12 sm:gap-8">
               <div className="sm:col-span-5">
                 <div className="aspect-[4/5] w-full overflow-hidden rounded-2xl border border-border bg-muted">
-                  <PortraitMedia profile={modalProfile} />
+                  <PortraitMedia profile={modalProfile} isCenter={true} />
                 </div>
               </div>
 

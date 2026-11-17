@@ -1,7 +1,7 @@
 import React, { useState, useMemo, useEffect } from 'react';
 import { AnimatePresence, motion } from 'framer-motion';
 import { Search, X, Plus, Minus } from 'lucide-react';
-import { cn } from '@/lib/utils';
+import { cn } from '../lib/utils';
 import { FAQ_CATEGORIES } from '../data/firmData';
 
 export interface FlatFaqItem {

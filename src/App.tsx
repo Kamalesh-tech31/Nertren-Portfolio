@@ -1,32 +1,51 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Navbar } from './components/Navbar';
-import { HomeSection } from './components/HomeSection';
+import { HeroSection } from './components/HeroSection';
 import { AboutSection } from './components/AboutSection';
 import { AdvocateProfiles } from './components/AdvocateProfiles';
 import { ClientEngagement } from './components/ClientEngagement';
 import { CourtsSection } from './components/CourtsSection';
 import { FaqSection } from './components/FaqSection';
 import { Footer } from './components/Footer';
-import {
-  LegalInformationDialog,
-  type LegalTabId,
-} from './components/LegalInformationDialog';
+import { DisclaimerGate } from './components/DisclaimerGate';
+import { LegalInformationDialog } from './components/LegalInformationDialog';
+
+type LegalRoute = 'confidentiality' | 'disclaimer' | 'privacy' | 'terms' | null;
+
+function getLegalRoute(hash: string): LegalRoute {
+  const h = hash.replace(/^#\/?/, '').toLowerCase().trim();
+  if (h === 'confidentiality') return 'confidentiality';
+  if (h === 'disclaimer') return 'disclaimer';
+  if (h === 'privacy') return 'privacy';
+  if (h === 'terms') return 'terms';
+  return null;
+}
 
 export default function App() {
-  const [isLegalModalOpen, setIsLegalModalOpen] = useState(false);
-  const [activeLegalTab, setActiveLegalTab] = useState<LegalTabId>('confidentiality');
+  const [legalRoute, setLegalRoute] = useState<LegalRoute>(() =>
+    getLegalRoute(window.location.hash)
+  );
 
-  const handleOpenLegalModal = (tab: LegalTabId) => {
-    setActiveLegalTab(tab);
-    setIsLegalModalOpen(true);
+  useEffect(() => {
+    const onHashChange = () => {
+      setLegalRoute(getLegalRoute(window.location.hash));
+    };
+    window.addEventListener('hashchange', onHashChange);
+    return () => window.removeEventListener('hashchange', onHashChange);
+  }, []);
+
+  const handleCloseLegal = () => {
+    window.history.replaceState(null, '', window.location.pathname);
+    setLegalRoute(null);
   };
 
-  const handleCloseLegalModal = () => {
-    setIsLegalModalOpen(false);
-  };
-
+  // ── Main site with Continuous Legal Document Modal ──────────────────────
   return (
     <div className="min-h-screen bg-background text-foreground">
+      {/* First-visit disclaimer gate */}
+      <DisclaimerGate />
+
+      {/* Skip to main content */}
       <a
         href="#main-content"
         className="sr-only focus:not-sr-only focus:fixed focus:top-3 focus:left-3 focus:z-[60] focus:bg-foreground focus:px-4 focus:py-2 focus:text-sm focus:text-background"
@@ -34,10 +53,12 @@ export default function App() {
         Skip to main content
       </a>
 
-      <Navbar onOpenLegalModal={handleOpenLegalModal} />
+      <Navbar />
 
       <main id="main-content">
-        <HomeSection />
+        {/* Full-width photographic hero */}
+        <HeroSection />
+
         <AboutSection />
         <AdvocateProfiles />
         <ClientEngagement />
@@ -45,13 +66,13 @@ export default function App() {
         <FaqSection />
       </main>
 
-      <Footer onOpenLegalModal={handleOpenLegalModal} />
+      <Footer />
 
+      {/* Continuous Documentation-Style Legal Information Modal */}
       <LegalInformationDialog
-        isOpen={isLegalModalOpen}
-        activeTab={activeLegalTab}
-        onClose={handleCloseLegalModal}
-        onTabChange={setActiveLegalTab}
+        isOpen={Boolean(legalRoute)}
+        initialSection={legalRoute}
+        onClose={handleCloseLegal}
       />
     </div>
   );

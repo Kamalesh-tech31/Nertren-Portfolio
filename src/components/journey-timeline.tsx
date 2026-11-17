@@ -1,10 +1,10 @@
 "use client";
 
-import { useCallback, useEffect, useRef, useState, type ReactNode } from "react";
+import React, { useCallback, useEffect, useRef, useState, type ReactNode } from "react";
 import { motion, useInView, useReducedMotion } from "framer-motion";
 import { AlertTriangle, CheckCircle2, Cpu, Radio, ShieldAlert } from "lucide-react";
-import { cn } from "@/lib/utils";
-import { computeTimelineProgress, getTimelineStepState } from "@/utils/navigation";
+import { cn } from "../lib/utils";
+import { computeTimelineProgress, getTimelineStepState } from "../utils/navigation";
 
 export type JourneyStep = {
   icon?: ReactNode;
@@ -39,7 +39,7 @@ function Step({
   reducedMotion: boolean;
 }) {
   const ref = useRef<HTMLLIElement>(null);
-  const seen = useInView(ref, { margin: "-35% 0px -35% 0px" });
+  const seen = useInView(ref, { margin: "-20% 0px -20% 0px" });
 
   useEffect(() => {
     if (seen) {
@@ -59,80 +59,94 @@ function Step({
     <li
       ref={ref}
       data-step-state={stepState}
-      className="relative grid grid-cols-[3.5rem_1fr] items-start gap-x-4 md:grid-cols-[1fr_5rem_1fr] md:gap-x-0"
+      className="relative grid grid-cols-[3rem_1fr] items-center gap-x-5 md:grid-cols-[1fr_8rem_1fr] md:gap-x-0"
     >
-      <span
+      {/* Circular Stage Marker — Centered precisely on the connector curve */}
+      <div
         className={cn(
-          "z-10 col-start-1 grid size-12 place-items-center rounded-2xl border bg-card transition-colors duration-500 md:col-start-2 md:size-16 md:justify-self-center",
+          "z-10 col-start-1 grid size-12 place-items-center rounded-full border-2 bg-card transition-all duration-500 md:col-start-2 md:size-14 md:justify-self-center shadow-xs",
           isActive
-            ? "border-primary"
+            ? "border-[#76543D] ring-4 ring-[#76543D]/15 scale-105"
             : isHighlighted
-              ? "border-primary/50"
-              : "border-border"
+              ? "border-[#A77C52] bg-card"
+              : "border-[#D8C2AA]/70 bg-card"
         )}
       >
         <span
           className={cn(
-            "grid size-8 place-items-center rounded-xl transition-all duration-500 md:size-10 [&_svg]:size-4 md:[&_svg]:size-5",
+            "grid size-8 place-items-center rounded-full transition-all duration-500 md:size-9 [&_svg]:size-4 md:[&_svg]:size-4.5",
             isActive
-              ? "scale-105 bg-primary text-primary-foreground"
+              ? "bg-[#76543D] text-white"
               : isHighlighted
-                ? "bg-primary/90 text-primary-foreground"
-                : "bg-muted text-muted-foreground"
+                ? "bg-[#A77C52] text-white"
+                : "bg-[#F2EBE3] text-muted-foreground"
           )}
         >
           {step.icon}
         </span>
-      </span>
+      </div>
 
+      {/* Stage Content Card — Positioned with consistent horizontal separation from the path */}
       <motion.div
-        initial={reducedMotion ? false : { opacity: 0, y: 18 }}
+        initial={reducedMotion ? false : { opacity: 0, y: 12 }}
         animate={
           reducedMotion || isHighlighted
             ? { opacity: 1, y: 0 }
-            : { opacity: 0.28, y: 14 }
+            : { opacity: 0.35, y: 8 }
         }
         transition={
           reducedMotion
             ? { duration: 0 }
-            : { duration: 0.55, ease: [0.32, 0.72, 0, 1] }
+            : { duration: 0.45, ease: [0.32, 0.72, 0, 1] }
         }
         className={cn(
-          "col-start-2 min-w-0 md:max-w-sm",
+          "col-start-2 min-w-0 md:max-w-md",
           right
-            ? "md:col-start-3 md:pl-10"
-            : "md:col-start-1 md:row-start-1 md:justify-self-end md:pr-10 md:text-right"
+            ? "md:col-start-3 md:pl-14 md:text-left"
+            : "md:col-start-1 md:row-start-1 md:justify-self-end md:pr-14 md:text-right"
         )}
       >
         <p
           className={cn(
-            "text-xs font-semibold uppercase tracking-widest transition-colors duration-300",
-            isHighlighted ? "text-primary" : "text-muted-foreground"
+            "text-xs font-bold uppercase tracking-[0.2em] transition-colors duration-300",
+            isActive
+              ? "text-[#76543D]"
+              : isHighlighted
+                ? "text-[#A77C52]"
+                : "text-muted-foreground"
           )}
         >
           {step.date}
         </p>
-        <h3 className="mt-1 font-editorial text-xl sm:text-2xl font-semibold tracking-tight text-foreground text-balance">
+
+        {/* Increased Heading Size */}
+        <h3 className="mt-1 text-xl sm:text-2xl font-bold tracking-tight text-[#49362D] text-balance leading-snug">
           {step.title}
         </h3>
-        <p
+
+        {/* Increased Description Size with comfortable reading style */}
+        <div
           className={cn(
-            "mt-2 rounded-2xl border bg-card p-4 sm:p-5 text-left text-sm leading-relaxed text-muted-foreground transition-colors duration-500",
+            "mt-2 rounded-2xl border bg-card p-4 sm:p-5 text-left text-sm sm:text-[15px] leading-relaxed text-[#64748B] transition-all duration-500 shadow-xs",
             isActive
-              ? "border-primary/55"
+              ? "border-[#76543D]/50 ring-1 ring-[#76543D]/10"
               : isHighlighted
-                ? "border-primary/35"
+                ? "border-[#A77C52]/40"
                 : "border-border"
           )}
         >
-          {step.description}
-        </p>
+          <p>{step.description}</p>
+        </div>
       </motion.div>
     </li>
   );
 }
 
-/** A vertical timeline. The line fills and the markers light up as each step scrolls into the middle of the view. */
+/**
+ * Continuous Curved (S-shaped / Zigzag) 7-Stage Timeline.
+ * Connects all stages with an elegant, slender SVG curved path on desktop and vertical track on mobile.
+ * Starts precisely at center of Stage 01 and terminates at center of Stage 07.
+ */
 export function JourneyTimeline({
   eyebrow = "From report to response",
   title = "Every report, followed all the way through",
@@ -149,7 +163,6 @@ export function JourneyTimeline({
   const prefersReducedMotion = Boolean(useReducedMotion());
   const [reachedIndex, setReachedIndex] = useState(-1);
   const [activeIndex, setActiveIndex] = useState(-1);
-  const line = useRef<HTMLSpanElement>(null);
 
   const onEnter = useCallback((i: number) => {
     setActiveIndex(i);
@@ -164,48 +177,81 @@ export function JourneyTimeline({
     ? 100
     : computeTimelineProgress(reachedIndex, steps.length);
 
-  useEffect(() => {
-    if (line.current) {
-      line.current.style.height = `${progressPercent}%`;
-    }
-  }, [progressPercent]);
+  // SVG pronounced S-curved path: starts at Stage 01 center (50, 0),
+  // alternates left and right across stages, and terminates precisely at Stage 07 center (50, 1000).
+  const desktopCurvedPath =
+    "M 50,0 C 58,55 58,112 50,167 C 42,222 42,278 50,333 C 58,388 58,445 50,500 C 42,555 42,612 50,667 C 58,722 58,778 50,833 C 42,888 42,945 50,1000";
 
   return (
     <div className={cn("w-full", className)}>
       <div className="mx-auto max-w-3xl text-center">
-        <p className="text-xs font-semibold uppercase tracking-[0.16em] text-primary">
+        <p className="text-xs font-semibold uppercase tracking-[0.18em] text-[#A77C52]">
           {eyebrow}
         </p>
         <h2
           id="engagement-heading"
-          className="mt-2.5 font-editorial text-3xl sm:text-4xl font-semibold tracking-tight text-foreground text-balance"
+          className="mt-2 text-2xl sm:text-3xl md:text-4xl font-bold tracking-tight text-[#49362D] text-balance"
         >
           {title}
         </h2>
         {description && (
-          <p className="mt-3.5 text-base leading-relaxed text-muted-foreground">
+          <p className="mt-3 text-sm sm:text-base leading-relaxed text-[#64748B] max-w-2xl mx-auto">
             {description}
           </p>
         )}
       </div>
 
-      <div className="relative mx-auto mt-10 sm:mt-12 max-w-4xl">
-        <span
-          aria-hidden="true"
-          className="pointer-events-none absolute bottom-4 left-6 top-4 w-[2px] -translate-x-1/2 bg-border md:left-1/2"
+      <div className="relative mx-auto mt-8 sm:mt-10 max-w-4xl py-2 sm:py-3">
+        {/* Desktop Curved SVG Path Connector — Starts at Stage 01 center and ends at Stage 07 center */}
+        <div
+          className="pointer-events-none absolute left-0 right-0 hidden md:block"
+          style={{ top: "28px", bottom: "28px" }}
         >
-          <span
-            ref={line}
-            className={cn(
-              "block w-full bg-primary",
-              prefersReducedMotion ? "" : "transition-[height] duration-700 ease-out"
-            )}
-            style={{ height: `${progressPercent}%` }}
+          <svg
+            viewBox="0 0 100 1000"
+            preserveAspectRatio="none"
+            className="size-full overflow-visible"
+            aria-hidden="true"
+          >
+            {/* Background passive curve */}
+            <path
+              d={desktopCurvedPath}
+              fill="none"
+              stroke="#D8C2AA"
+              strokeWidth="1.75"
+              strokeOpacity="0.5"
+            />
+            {/* Active animated curve */}
+            <motion.path
+              d={desktopCurvedPath}
+              fill="none"
+              stroke="#76543D"
+              strokeWidth="2"
+              strokeLinecap="round"
+              initial={{ pathLength: 0 }}
+              animate={{ pathLength: prefersReducedMotion ? 1 : progressPercent / 100 }}
+              transition={{ duration: 0.55, ease: [0.32, 0.72, 0, 1] }}
+            />
+          </svg>
+        </div>
+
+        {/* Mobile Vertical Track Connector — positioned comfortably beside text */}
+        <div
+          className="pointer-events-none absolute left-[23px] w-[1.75px] bg-[#D8C2AA]/50 md:hidden"
+          style={{ top: "24px", bottom: "24px" }}
+        >
+          <motion.div
+            className="w-full bg-[#76543D]"
+            initial={{ height: 0 }}
+            animate={{ height: `${progressPercent}%` }}
+            transition={{ duration: 0.5, ease: [0.32, 0.72, 0, 1] }}
           />
-        </span>
+        </div>
+
+        {/* Stages List with compact 20-30% tighter spacing */}
         <ol
           aria-label="Client Engagement Stages"
-          className="relative flex flex-col gap-10 md:gap-14"
+          className="relative flex flex-col gap-6 md:gap-7"
         >
           {steps.map((s, i) => (
             <Step

@@ -1,5 +1,5 @@
 import React from 'react';
-import { FeatureBento } from '@/components/feature-bento';
+import { FeatureBento } from './feature-bento';
 import { FIRM_INFO } from '../data/firmData';
 
 export const HomeSection: React.FC = () => {
@@ -7,7 +7,7 @@ export const HomeSection: React.FC = () => {
     <section
       id="home"
       aria-labelledby="home-heading"
-      className="section-anchor bg-background pt-24 pb-12 sm:pt-28 sm:pb-16"
+      className="section-anchor bg-background pt-10 pb-12 sm:pt-12 sm:pb-16"
     >
       <div className="mx-auto max-w-6xl px-6 sm:px-8 lg:px-10">
         <FeatureBento
