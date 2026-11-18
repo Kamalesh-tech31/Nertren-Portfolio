@@ -1,0 +1,4 @@
+# robots.txt for Nertren Law Associates
+# Allow all legitimate search engine crawlers access to public content
+User-agent: *
+Allow: /

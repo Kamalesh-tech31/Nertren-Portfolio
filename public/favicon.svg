@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" width="64" height="64">
+  <rect width="64" height="64" rx="14" fill="#49362D"/>
+  <rect x="2" y="2" width="60" height="60" rx="12" fill="none" stroke="#76543D" stroke-width="2"/>
+  <!-- Monogram N for Nertren Law Associates -->
+  <path d="M19 46 V18 L33 36 V18 H38 V46 L24 28 V46 Z" fill="#F2EBE3"/>
+  <!-- Muted bronze accent dot -->
+  <circle cx="45" cy="45" r="2.5" fill="#A77C52"/>
+</svg>
