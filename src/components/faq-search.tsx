@@ -145,7 +145,8 @@ export const FaqSearch: React.FC<FaqSearchProps> = ({
             onChange={(e) => setQuery(e.target.value)}
             placeholder="Search questions..."
             aria-label="Search questions"
-            className="h-11 sm:h-12 w-full rounded-xl border border-border bg-card pl-11 pr-10 text-sm text-foreground outline-none transition-colors placeholder:text-muted-foreground/70 focus:border-primary focus:ring-2 focus:ring-primary/20"
+            autoComplete="off"
+            className="h-11 sm:h-12 w-full rounded-xl border border-border bg-card pl-11 pr-10 text-sm text-foreground outline-none transition-colors placeholder:text-muted-foreground/70 focus:border-primary focus:ring-2 focus:ring-primary/20 [&::-webkit-search-cancel-button]:hidden [&::-webkit-search-cancel-button]:appearance-none [&::-webkit-search-decoration]:hidden [&::-webkit-search-results-button]:hidden [&::-webkit-search-results-decoration]:hidden [&::-ms-clear]:hidden"
           />
           {query.trim().length > 0 && (
             <button
